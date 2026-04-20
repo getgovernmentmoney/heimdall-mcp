@@ -85,11 +85,16 @@ Add to `.cursor/mcp.json` in your project (or global settings):
 
 ## What you get
 
-**23 tools** across four domains:
+**36 tools** across nine domains:
 
 | Domain | Tools | What it covers |
 |---|---|---|
-| **Findings & Research** | 11 | GAO, IG, FAC findings; source documents; entity extraction; cross-agency patterns; LDA topics; TF-IDF similarity; RAG search over 197K PDF chunks |
+| **Contracts** | 4 | Search 58.5M FPDS actions; recompete/expiring-contract lookups; vendor award history; full PIID modification history |
+| **Contractor Risk & Performance** | 2 | 6-dim composite risk score + 5-subdim performance score across 872,793 entities (Heimdall differentiator) |
+| **Grants** | 3 | Historical award search (live); opportunities + FAC findings (Q2 ingestion) |
+| **Legislation** | 2 | Congressional bill search + detail |
+| **Appropriations** | 1 | Agency/bureau/account budget with 3-year trend |
+| **Findings & Research** | 12 | GAO/IG/FAC findings; source documents; entity extraction; cross-agency patterns; LDA topics; TF-IDF similarity; findings-by-contractor; RAG over 197K PDF chunks |
 | **Sentinel** (live oversight monitoring) | 6 | 70+ OIG sites scraped nightly; change detection; anomaly alerts; scraper health |
 | **Pipeline & Market Intel** | 6 | Ranked opportunities by profile; NAICS spending trends; cost tracking; AI usage logs |
 | **Write ops** | gated, auditable | `acknowledge_alert`, `approve_rule_proposal` |

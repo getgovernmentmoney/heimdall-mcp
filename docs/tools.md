@@ -1,6 +1,6 @@
 # Heimdall MCP Tool Reference
 
-23 tools across four domains. All tools run on Heimdall's hosted infrastructure at `https://api.heimdallgov.com/mcp/sse` and require a Bearer API key with a tier of `core`, `api`, `pro`, or `enterprise`.
+**36 tools across nine domains.** All tools run on Heimdall's hosted infrastructure at `https://api.heimdallgov.com/mcp/sse` and require a Bearer API key with a tier of `core`, `api`, `pro`, or `enterprise`.
 
 **Read tools are safe** — they query production data without mutation. **Write tools** (2 total) are explicitly marked and gated to your subscription's own state only.
 
@@ -88,6 +88,96 @@ Approve a pending rule proposal for the next pipeline run. Changes the proposal 
 
 ### `get_ai_usage`
 Query AI API usage logs with filtering. Filter by `module` (scoring/extraction/triage/profiler), model name, or time window. Returns token counts, costs, and quality metrics.
+
+---
+
+---
+
+## Contracts (4 tools)
+
+The FPDS + USASpending-backed contract search surface — 58.5M+ contract actions across all agencies and NAICS codes. Matches BGOV, GovWin, and Fed-Spend contract-history features at 1/100th the price.
+
+### `search_contracts`
+General-purpose contract search. Filter by contracting/funding agency substring, NAICS code (exact), vendor name or UEI, description keyword, signed-since date, value range (min/max), or set-aside type (`8A`, `WOSB`, `HUBZone`, `SDVOSBC`). Each result includes PIID, vendor, agency, NAICS, POP end date, contract value ceiling, competition, and a direct FPDS link.
+
+### `find_expiring_contracts`
+Find contracts coming up for recompete — contracts with POP ending in the next N months (default 18). Filter by agency or NAICS. Results sorted soonest-expiring first. Each result includes `days_until_expiry` for sorting and prioritization. This is the recompete-tracking feature that Fed-Spend and GovWin charge 12–50x more for.
+
+### `get_vendor_contracts`
+Get all contracts for a vendor by UEI (preferred, exact match) or name substring. Returns the latest modification of each PIID the vendor has held. Use to assess competitor win history, prospect portfolio, or teaming partner experience.
+
+### `get_contract_detail`
+Get full detail for a single contract by PIID. Returns the contract header plus, if `include_modifications=True`, every modification row ordered by signed date. Use to trace cost growth, schedule slippage, and option exercise history.
+
+---
+
+## Contractor Risk & Performance (2 tools)
+
+The Heimdall differentiators — no competitor ($9 to $50K/yr) entity-resolves OIG/GAO findings and FAC outcomes into contractor risk profiles. 872,793 entities scored.
+
+### `get_contractor_risk_profile`
+Get the **6-dimension contractor risk profile** for a vendor. Provide `uei` (preferred, exact) or `legal_name` (substring). Returns composite score, risk tier (Low/Moderate/Elevated/High/Critical), top risk driver, and each sub-score:
+
+| Dimension | Weight | Source |
+|---|---|---|
+| Oversight exposure | 26% | OIG/GAO direct findings |
+| Compliance/integrity | 21% | SAM exclusions + FAC |
+| Award concentration | 17% | single-agency dependency, sole-source rate |
+| Performance | 15% | FPDS modifications (cost growth, schedule) |
+| Financial signals | 13% | USASpending revenue trend, award gaps |
+| Environment risk | 8% | declining NAICS, regulatory pressure |
+
+### `get_contractor_performance`
+Get the **5-subdimension performance score** for a vendor. Scored 0-100 from public FPDS modification data — labeled as "Performance Indicators (Public Data)" for honesty (these are proxy signals, not CPARS):
+
+- `cost_control_score` — modification cost growth ratio
+- `schedule_score` — POP extensions
+- `satisfaction_score` — option exercise rate
+- `integrity_score` — FAPIIS events, exclusions, sustained protests
+- `continuity_score` — contract extensions, recompete wins
+
+---
+
+## Grants (3 tools)
+
+Federal grants and Single Audit compliance surface.
+
+### `search_grant_awards`
+Search historical federal grant awards (USAspending). Filter by recipient name/UEI, CFDA/Assistance Listing, awarding agency, place-of-performance state, or minimum amount. Returns award ID, FAIN, recipient info, agency, CFDA title, start/end dates, award amount, and USAspending URL.
+
+### `search_grant_opportunities` _(data ingestion pending — returns status message)_
+Open grant opportunities from Grants.gov. Full ingestion lands in Sprint 8c (~2026-04-27). Current response: `status: data_ingestion_pending` with a pointer to `search_grant_awards` for historical data.
+
+### `get_fac_findings` _(data ingestion pending — returns status message)_
+Single Audit (FAC) findings for grant recipients. Full ingestion lands in Sprint 8c. In the interim, use `search_findings` for OIG and GAO findings which are already loaded (10,145 findings across 5,000+ reports).
+
+---
+
+## Legislation (2 tools)
+
+Federal bill and resolution search via the Congress API.
+
+### `search_legislation`
+Search Congressional bills and resolutions. Filter by keyword (title/description/latest action), congress number (e.g., 119), chamber (`house`/`senate`), or bill type (`hr`, `s`, `hjres`, `sjres`, `hconres`, `sconres`, `hres`, `sres`). Returns bills ordered by most recent update.
+
+### `get_bill_detail`
+Get detail for a specific bill by number (e.g., `HR 1234`, `S 500`). If multiple Congresses have the same bill number, pass `congress_num` to disambiguate.
+
+---
+
+## Appropriations (1 tool)
+
+Federal agency budget data from OMB — parity with BGOV's agency-budget feature.
+
+### `get_agency_budget`
+Get agency/bureau/account-level budget authority with 3-year trend (requested vs prior-year enacted vs two-year-back actual). Filter by agency name, bureau name, account keyword, fiscal year, or minimum budget authority. Returns `delta_pct` showing requested vs prior-enacted change — use to spot programs with budget pressure or growth.
+
+---
+
+## Additional Findings Tool
+
+### `get_findings_by_contractor`
+**The Heimdall differentiator** — returns OIG/GAO/FAC findings filed against a specific contractor, by UEI (exact) or name (substring). Filter by status (open/closed). No competitor links oversight findings to contractors at the entity level. Pair with `get_contractor_risk_profile` for the full 6-dim composite picture.
 
 ---
 
