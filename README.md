@@ -91,7 +91,7 @@ Add to `.cursor/mcp.json` in your project (or global settings):
 |---|---|---|
 | **Contracts** | 4 | Search 58.5M FPDS actions; recompete/expiring-contract lookups; vendor award history; full PIID modification history |
 | **Contractor Risk & Performance** | 2 | 6-dim composite risk score + 5-subdim performance score across 872,793 entities (Heimdall differentiator) |
-| **Grants** | 3 | Historical award search (live); opportunities + FAC findings (Q2 ingestion) |
+| **Grants** | 3 | Open opportunities (Grants.gov); historical awards (USAspending); Single Audit findings (FAC) |
 | **Legislation** | 2 | Congressional bill search + detail |
 | **Appropriations** | 1 | Agency/bureau/account budget with 3-year trend |
 | **Findings & Research** | 12 | GAO/IG/FAC findings; source documents; entity extraction; cross-agency patterns; LDA topics; TF-IDF similarity; findings-by-contractor; RAG over 197K PDF chunks |

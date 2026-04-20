@@ -145,11 +145,11 @@ Federal grants and Single Audit compliance surface.
 ### `search_grant_awards`
 Search historical federal grant awards (USAspending). Filter by recipient name/UEI, CFDA/Assistance Listing, awarding agency, place-of-performance state, or minimum amount. Returns award ID, FAIN, recipient info, agency, CFDA title, start/end dates, award amount, and USAspending URL.
 
-### `search_grant_opportunities` _(data ingestion pending — returns status message)_
-Open grant opportunities from Grants.gov. Full ingestion lands in Sprint 8c (~2026-04-27). Current response: `status: data_ingestion_pending` with a pointer to `search_grant_awards` for historical data.
+### `search_grant_opportunities`
+Open federal grant opportunities from Grants.gov. Filter by keyword (title/description), CFDA/Assistance Listing, awarding agency, eligibility type (substring match on eligibility_labels), or `closing_within_days` window. Returns opportunity number, title, agency, posted/close dates, award ceiling/floor, expected number of awards, and application URLs.
 
-### `get_fac_findings` _(data ingestion pending — returns status message)_
-Single Audit (FAC) findings for grant recipients. Full ingestion lands in Sprint 8c. In the interim, use `search_findings` for OIG and GAO findings which are already loaded (10,145 findings across 5,000+ reports).
+### `get_fac_findings`
+Single Audit (FAC) findings for grant recipients. The Federal Audit Clearinghouse contains Single Audit results for organizations receiving $750K+/yr in federal funds. Filter by auditee name, UEI, federal agency, CFDA/Assistance Listing, state, and optional flags for material-weakness-only or repeat-findings-only. Returns auditee, UEI, fiscal year end, program, federal agency, questioned costs, material-weakness flag, repeat-finding flag, and finding description.
 
 ---
 
