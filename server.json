@@ -1,0 +1,70 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/draft/server.schema.json",
+  "name": "io.heimdallgov/mcp",
+  "description": "Federal oversight intelligence for AI agents. 23 tools over GAO reports, IG findings, Single Audit (FAC), SAM.gov opportunities, contractor risk, and 197K+ PDF chunks via hybrid RAG search.",
+  "version": "1.0.0",
+  "websiteUrl": "https://heimdallgov.com",
+  "repository": {
+    "url": "https://github.com/getgovernmentmoney/heimdall-mcp",
+    "source": "github"
+  },
+  "remotes": [
+    {
+      "transportType": "sse",
+      "url": "https://api.heimdallgov.com/mcp/sse",
+      "headers": [
+        {
+          "name": "Authorization",
+          "description": "Heimdall API key as 'Bearer hml_sk_...'. Get one at https://heimdallgov.com/signup.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "registryName": "npm",
+      "name": "mcp-remote",
+      "version": "latest",
+      "runtimeHint": "npx",
+      "runtimeArguments": [
+        {
+          "type": "positional",
+          "value": "https://api.heimdallgov.com/mcp/sse"
+        },
+        {
+          "type": "named",
+          "name": "--header",
+          "value": "Authorization: Bearer ${HEIMDALL_API_KEY}"
+        }
+      ],
+      "environmentVariables": [
+        {
+          "name": "HEIMDALL_API_KEY",
+          "description": "Your Heimdall API key (starts with hml_sk_). Sign up at https://heimdallgov.com.",
+          "isRequired": true,
+          "isSecret": true
+        }
+      ]
+    }
+  ],
+  "categories": [
+    "government",
+    "research",
+    "compliance",
+    "data"
+  ],
+  "tags": [
+    "federal",
+    "oversight",
+    "gao",
+    "inspector-general",
+    "audit",
+    "compliance",
+    "sam-gov",
+    "fpds",
+    "contractor-risk",
+    "rag"
+  ]
+}

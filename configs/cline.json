@@ -1,0 +1,38 @@
+{
+  "mcpServers": {
+    "heimdall": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://api.heimdallgov.com/mcp/sse",
+        "--header",
+        "Authorization: Bearer YOUR_HEIMDALL_API_KEY"
+      ],
+      "disabled": false,
+      "autoApprove": [
+        "search_findings",
+        "get_open_recommendations",
+        "search_source_documents",
+        "get_oig_publications",
+        "search_gao_recommendations",
+        "find_similar_findings",
+        "get_domain_keywords",
+        "analyze_topics",
+        "get_cross_agency_patterns",
+        "search_documents",
+        "get_sentinel_status",
+        "list_recent_changes",
+        "query_alerts",
+        "get_oig_profile_health",
+        "get_baseline_comparison",
+        "list_pipeline_runs",
+        "get_cost_trends",
+        "get_latest_ranked",
+        "get_spending_trends",
+        "get_ai_usage",
+        "extract_entities"
+      ]
+    }
+  }
+}

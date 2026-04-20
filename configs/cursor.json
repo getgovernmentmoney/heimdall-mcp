@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "heimdall": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://api.heimdallgov.com/mcp/sse",
+        "--header",
+        "Authorization: Bearer YOUR_HEIMDALL_API_KEY"
+      ]
+    }
+  }
+}
